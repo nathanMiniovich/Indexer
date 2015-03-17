@@ -276,6 +276,7 @@ int trieDFS(trieNode* scout,char* buffer,int* index, FILE* target){
 	if(scout->isWord > -1){
 		buffer[(scout->level)+1] = '\0';
 
+		//terrible runtime but needed to work. Fix implementation later
 		for(int x=0;x<gFileCount;x++){
 			if(scout->countarr[x] == NULL){
 				scout->countarr[x] = buildCountNode("$");
