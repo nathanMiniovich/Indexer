@@ -26,15 +26,15 @@ int main(int argc,char** argv){
 	//check if the file the user wants to write to already exists and ask if they want to overwrite it
 	if(access(writepath,F_OK) != -1){
 
-		char input[100];
+		char userinput[100];
 		int flag = 0;
 
 		while(flag == 0){
 		
 			printf("The file you with to write to already exists, do you wish to overwrite it? (Press 1 for yes 2 for no):\n");
-			fgets(input,99,stdin);
+			fgets(userinput,99,stdin);
 
-			if(sscanf(input,"%d",&flag) != 1){
+			if(sscanf(userinput,"%d",&flag) != 1){
 				flag = 0;
 				printf("Invalid sscanf() try again:\n");
 				continue;
@@ -276,6 +276,13 @@ int trieDFS(trieNode* scout,char* buffer,int* index, FILE* target){
 	if(scout->isWord > -1){
 		buffer[(scout->level)+1] = '\0';
 
+		for(int x=0;x<gFileCount;x++){
+			if(scout->countarr[x] == NULL){
+				scout->countarr[x] = buildCountNode("$");
+				scout->countarr[x]->count = 0;
+			}
+		}
+
 		mergeSort(scout->countarr,0,gFileCount-1);
 		writeBot(scout,buffer,target);
 
@@ -344,7 +351,7 @@ void merge(countNode** countarr, int lo, int mid, int hi){
 	m = mid + 1;
 	
 	while((l<=mid) && (m<=hi)){
-		
+
 		if(countarr[l]->count > countarr[m]->count){
 			temp[i] = countarr[l];
 			l++;
@@ -363,7 +370,6 @@ void merge(countNode** countarr, int lo, int mid, int hi){
 			temp[i] = countarr[m];
 			m++;
 		}
-		
 		i++;
 
 	}
@@ -398,7 +404,7 @@ void writeBot(trieNode* scout, char* buffer, FILE* target){
 	for(i = 0; i < gFileCount; i++){
 
 		//in case the word count for a particular word is zero for one file but not for another
-		if(scout->countarr[i] == NULL){
+		if(scout->countarr[i]->count == 0){
 			continue;
 		}
 

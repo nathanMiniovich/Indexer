@@ -19,7 +19,7 @@ int add(char toadd,trieNode* parent) {
 		index = ((int)toadd - 22);
 	}
 
-	//index for lowercase numbers
+	//index for lowercase letters
 	else{
 		index = ((int)toadd - (int)'a');
 	}
@@ -153,12 +153,12 @@ int buildTrie(char* input, size_t size, int filecount, int fileindex, char* path
 		}
 
 		//if the first character is a number return to the root
-		else if((isdigit(input[i])) && (temp->level == 0)){
+		else if((isdigit(input[i])) && (temp->level < 0)){
 			temp = root;	
 		}
 
 		//if the input is a number and the the first character in a word then insert it
-		else if((isdigit(input[i])) && (temp->level > 0)){
+		else if((isdigit(input[i])) && (temp->level >= 0)){
 			temp = temp->next[add(input[i],temp)];	
 		}
 
@@ -185,7 +185,7 @@ int buildTrie(char* input, size_t size, int filecount, int fileindex, char* path
 
 				//if the count array that need to be added to does not exist then create it and add to it
 				else{
-					temp->countarr = (countNode**)calloc(filecount, sizeof(countNode*));
+					temp->countarr = (countNode**)calloc(gFileCount, sizeof(countNode*));
 					temp->countarr[fileindex] = buildCountNode(path);
 				}
 			}
