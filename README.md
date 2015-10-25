@@ -1,6 +1,6 @@
 # Indexer
 
-Important Notes on this implementation:
+Important notes on this implementation:
 	-This implementation's definition of proper alphanumeric order is that it treat numbers 0-9 as an extension of the alphabet. So 0 > Z and the range contains 36 characters
 	-When two files have the same count for a word this implementation compares the entire file path for the files relative to the place from which the program was started as opposed to just its local name
 	
